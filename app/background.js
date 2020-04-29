@@ -27,10 +27,10 @@ var curDappRequests = ["blub"];
 
 ////////////////////////////////////
 // development environment settings:
-// curMnemonic = 'grid bind gasp long fox catch inch radar purchase winter woman cactus';
-// curAddress = 'yRaSjQLmnVUapXCSuxtCYZNf4ZhkjB5nDh';
+// curMnemonic = 'liar fee island situate deal exotic flat direct save bag fiscal news';
+// curAddress = 'yPDmTBtZd4sqMW6gUkm8MNWLu9kFF4DEji';
 // curBalance = '1';
-// curIdentityId = 'FJ85ReAdCiBBRy39JcrYJo8YkoJLa5oSMpziXYoSJ2a7';
+// curIdentityId = '45xcVv3zQnsdZTsCYiS1RfCM7oWErnXpeCWZEK5EZM2W';
 // chrome.storage.local.set({ mnemonic: curMnemonic });
 // chrome.storage.local.set({ address: curAddress });
 // chrome.storage.local.set({ balance: curBalance });
