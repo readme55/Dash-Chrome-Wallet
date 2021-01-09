@@ -19,6 +19,8 @@ Browser-Extension (Chrome, Firefox, Brave, Edge) or Standalone Desktop versions 
 ## Description:
 Cryptocurrency-Dapp Wallet for Dash Platform (EvoNet-Testnet) using [DashJS](https://github.com/dashevo/js-dash-sdk) and DAPI (Decentralized API). Create an identity and username. Fetch data contracts and documents. Connect with Dapps using Push Notifications.
 
+Youtube introduction for [Chrome Wallet](https://youtu.be/IjjsQNd3Zto) and [Sample Dapps](https://youtu.be/76pYX44o_j8)
+
 ## Requirements:
 - None
 
@@ -33,7 +35,7 @@ and extract directory on disk
 ## Debug
 In case of any problems or errors open the Debug Console:
 - type "chrome://extensions" into addressline or open `Three Dots(Menu) -> More Tools -> Extensions`
-- Click on "background page" below the "Dash Chrome Wallet" title
+- Click on "background page" below the "Dash Chrome Wallet" title. In the top menu click on ´Console´ to see the log.
 
 ## Uninstall (for Option 1)
 - type "chrome://extensions" into addressline or open `Three Dots(Menu) -> More Tools -> Extensions`
