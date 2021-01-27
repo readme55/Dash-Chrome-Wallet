@@ -134,6 +134,7 @@ async function connect() {
   sdkOpts.network = 'testnet';
   sdkOpts.wallet = {};
   sdkOpts.wallet.mnemonic = curMnemonic;
+  sdkOpts.wallet.adapter = localforage;
   sdkOpts.apps = curApps;
   console.log("SDK Init \nMnemonic: " + curMnemonic + " \ncurApps: " + curApps)
   
@@ -1187,16 +1188,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         /////// run automated faucet
         console.log("run automated faucet for address " + curAddress)
         var httpReq = new XMLHttpRequest();
-        // Rion faucet
-        // httpReq.open("GET", "https://qetrgbsx30.execute-api.us-west-1.amazonaws.com/stage/?dashAddress=" + curAddress, true); // true for async
-        // dashameter faucet
-        // httpReq.open("GET", "https://us-central1-evodrip.cloudfunctions.net/evofaucet/drip/" + curAddress, true); // true for async
-        // cloud faucet (also got /bigdrip with 3 dash)
-        httpReq.open("GET", "http://134.122.104.155:5050/drip/" + curAddress, true); // true for async
+        var httpReq2 = new XMLHttpRequest();  // TODO remove redundant obj
+
+        // -1 is dm faucet 
+        httpReq.open("GET", "http://autofaucet-1.dashevo.io:5050/drip/" + curAddress, true); // true for async
         httpReq.addEventListener("load", function (e) {
           console.log(httpReq.responseText);
         }, false)
         httpReq.send(null);
+
+        // -2 is cloud for redundancy (also got /bigdrip with 3 dash)
+        httpReq2.open("GET", "http://autofaucet-2.dashevo.io:5050/drip/" + curAddress, true); // true for async
+        httpReq2.addEventListener("load", function (e) {
+          console.log(httpReq2.responseText);
+        }, false)
+        httpReq2.send(null);
+
         /////////////////////////////
 
         sendResponse({ complete: true });
@@ -1450,6 +1457,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     case "resetWallet":
       (async function resetWallet() {
+        console.log("RESET")
         curMnemonic = null; // must be null for dashjs init
         curAddress = '';
         curBalance = '';
@@ -1471,6 +1479,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         wls.setItem('switch', false)
         wls.setItem('switch2', false)
         wls.setItem('notification', false)
+        console.log("localforage length before reset: " + await localforage.length())
+        await localforage.clear();
+        console.log("localforage length after reset: " + await localforage.length())
         sendResponse({ complete: true });
         disconnect();
         connect();

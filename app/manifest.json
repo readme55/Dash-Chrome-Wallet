@@ -16,6 +16,7 @@
         "scripts": [
             "./lib/dash.min.js",
             "./lib/dashmachine-crypto-lib.js",
+            "./lib/localforage.js",
             "background.js"
         ],
         "persistent": false
