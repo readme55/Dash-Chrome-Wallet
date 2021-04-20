@@ -135,6 +135,8 @@ async function connect() {
   sdkOpts.wallet = {};
   sdkOpts.wallet.mnemonic = curMnemonic;
   sdkOpts.wallet.adapter = localforage;
+  sdkOpts.wallet.unsafeOptions = {};
+  sdkOpts.wallet.unsafeOptions.skipSynchronizationBeforeHeight = 415000; // only sync from start of 2021
   sdkOpts.apps = curApps;
   console.log("SDK Init \nMnemonic: " + curMnemonic + " \ncurApps: " + curApps)
   
@@ -364,7 +366,7 @@ async function getDefaultUsername() {
 async function getIdentityKeys() {
   console.log("start getIdentityKeys");
   // TODO: check if try..catch necessary
-  curIdentityHDPrivKey = await account.getIdentityHDKeyByIndex(0, 0);
+  curIdentityHDPrivKey = await account.identities.getIdentityHDKeyByIndex(0, 0);
   console.log("curIdentHDPrivKey: " + curIdentityHDPrivKey);
   curIdentityPrivKey = curIdentityHDPrivKey.privateKey;
   var pk = curIdentityPrivKey;
@@ -622,6 +624,9 @@ async function polling() {
   psdkOpts.network = 'testnet';
   psdkOpts.wallet = {};
   psdkOpts.wallet.mnemonic = curMnemonic;
+  sdkOpts.wallet.unsafeOptions = {};
+  sdkOpts.wallet.unsafeOptions.skipSynchronizationBeforeHeight = 415000; // only sync from start of 2021
+
   psdkApps = '{ "myContract" : { "contractId" : "' + pContractID + '" } }';
   psdkApps = JSON.parse(psdkApps);
   psdkOpts.apps = psdkApps;
@@ -1223,32 +1228,39 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         await disconnect();
         await connect();
 
+        // await chrome.storage.local.set({ mnemonic: curMnemonic });
+        wls.setItem('mnemonic', curMnemonic)
+
         try {
           curAddress = (await account.getUnusedAddress()).address;
           console.log(curAddress)
+          // await chrome.storage.local.set({ address: curAddress });
+          wls.setItem('address', curAddress)
+          
           curBalance = ((await account.getTotalBalance()) / 100000000);
           console.log(curBalance)
-          curIdentityId = (await account).getIdentityIds()[0].toString();
+          // await chrome.storage.local.set({ balance: curBalance });
+          wls.setItem('balance', curBalance)
+
+          // console.dir(await account.identities.getIdentityIds());
+          curIdentityId = (await account.identities.getIdentityIds()[0]).toString();
           console.log(curIdentityId)
+          // await chrome.storage.local.set({ identityId: curIdentityId });
+          // await chrome.storage.local.set({ identityId: "" });
+          wls.setItem('identityId', curIdentityId)
+
           await getIdentityKeys();
+          
           curName = await getDefaultUsername();
           console.log(curName)
+          wls.setItem('name', curName)
+
           console.log("Finish importing Mnemonic in background");
         } catch (e) {
+          console.error('Something went wrong:', e);
           sendResponse({ complete: false });
           return;
         }
-
-        // await chrome.storage.local.set({ mnemonic: curMnemonic });
-        wls.setItem('mnemonic', curMnemonic)
-        // await chrome.storage.local.set({ address: curAddress });
-        wls.setItem('address', curAddress)
-        // await chrome.storage.local.set({ balance: curBalance });
-        wls.setItem('balance', curBalance)
-        // await chrome.storage.local.set({ identityId: curIdentityId });
-        // await chrome.storage.local.set({ identityId: "" });
-        wls.setItem('identityId', curIdentityId)
-        wls.setItem('name', curName)
 
         sendResponse({ complete: true });
         // disconnect();
@@ -1347,6 +1359,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           getIdentityKeys();
         } catch (e) {
           sendResponse({ complete: false });
+          console.dir(e)
           return;
         }
 

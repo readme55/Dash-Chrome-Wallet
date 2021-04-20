@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Dash Chrome Wallet",
-    "version": "1.7.1",
+    "version": "1.8.0",
     "description": "Create an identity and username. Fetch data contracts and documents. Connect with Dapps using Push Notifications.",
     "icons": {
         "16": "./img/icon16.png",

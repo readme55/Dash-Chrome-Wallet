@@ -362,10 +362,10 @@ document.addEventListener('DOMContentLoaded', async function () {
       contractIdText.value = '75LFKcpnX6mnz1ToWTnKrtZqTdYWyExUfixPmc4DvR6a';
       toAddressText.value = "";
     }
-    if (exampleQuerySelector.value == "Example Token") {
+    if (exampleQuerySelector.value == "Fun Token") {
       documentNameText.value = 'token';
       queryObjectText.value = '{ "startAt": 1 }';
-      contractIdText.value = 'DY6KmhAsLqrkTxJWA7KAJA3vR4wHhExHqSYXLWitdxuu';
+      contractIdText.value = 'AvDumErCNn5Z6dgpDbBNemwyHLudFyyBgAiU1B5QrEMe';
       toAddressText.value = "";
     }
   });
