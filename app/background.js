@@ -49,6 +49,39 @@ var wls = window.localStorage;
 
 })();
 
+class LocalForageWrapper {
+  constructor() {
+    this.forage = localforage;
+    this.isConfig = false;
+  }
+
+  config() {
+    this.isConfig = true;
+  }
+
+  async setItem(key, item) {
+    console.log('setItem', key, item);
+    if (typeof item === 'object') {
+      await this.forage.setItem(key, JSON.stringify(item));
+    } else {
+      await this.forage.setItem(key, item);
+    }
+
+    return item;
+  }
+
+  async getItem(key) {
+    console.log('get item', key);
+    const item = await this.forage.getItem(key);
+    let res;
+    try {
+      res = JSON.parse(item);
+    } catch (e) {
+      res = item;
+    }
+    return res || null;
+  }
+}
 
 ////////////////////////////////////
 //// development environment settings: Uncomment for static credentials in CW
@@ -132,9 +165,15 @@ if (chrome.windows["WindowState"].HIDDEN == "hidden") {
 
 async function connect() {
   sdkOpts.network = 'testnet';
+  sdkOpts.dapiAddresses = [
+    '34.220.41.134',
+    '18.236.216.191',
+    '54.191.227.118',
+  ];
   sdkOpts.wallet = {};
   sdkOpts.wallet.mnemonic = curMnemonic;
-  sdkOpts.wallet.adapter = localforage;
+  // sdkOpts.wallet.adapter = localforage;
+  sdkOpts.wallet.adapter = new LocalForageWrapper();
   sdkOpts.wallet.unsafeOptions = {};
   sdkOpts.wallet.unsafeOptions.skipSynchronizationBeforeHeight = 415000; // only sync from start of 2021
   sdkOpts.apps = curApps;
@@ -1492,9 +1531,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         wls.setItem('switch', false)
         wls.setItem('switch2', false)
         wls.setItem('notification', false)
+        
+        // TODO: might need LocalForageWrapper adaption here
         console.log("localforage length before reset: " + await localforage.length())
         await localforage.clear();
         console.log("localforage length after reset: " + await localforage.length())
+        
         sendResponse({ complete: true });
         disconnect();
         connect();
