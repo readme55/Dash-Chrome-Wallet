@@ -340,26 +340,26 @@ document.addEventListener('DOMContentLoaded', async function () {
       //   '["normalizedParentDomainName", "==", "dash"]\n' +
       //   '],\n' +
       //   '"startAt": 1 }\n';
-      contractIdText.value = '36ez8VqoDbR8NkdXwFaf9Tp8ukBdQxN8eYs8JNMnUyKz';
+      contractIdText.value = '76wgB8KBxLGhtEzn4Hp5zgheyzzpHYvfcWGLs69B2ahq';
       // toAddressText.value = "yNPbcFfabtNmmxKdGwhHomdYfVs6gikbPf";  // Faucet
       toAddressText.value = "";
     }
     if (exampleQuerySelector.value == "Example Message") {
       documentNameText.value = 'message';
       queryObjectText.value = '{ "startAt": 1 }';
-      contractIdText.value = '3coTShwTvmKiySpwmDDzRJ9FGQx4RNLdawLttT9RNxXa';
+      contractIdText.value = '3oURAJACLdVnxdWzpjHL4m81nYTT81eQoLsiWAhXKmxw';
       toAddressText.value = "";
     }
     if (exampleQuerySelector.value == "Example Note") {
       documentNameText.value = 'note';
       queryObjectText.value = '{ "startAt": 1 }';
-      contractIdText.value = '9PiTpFPE4BC9Ugo2etsD2UDntv37qgHWoj67oW8fWhP6';
+      contractIdText.value = 'CJyrXCyRCWz5xhiAWzGZV7ep9yv3nUBmLq2ZJNMCEqVP';
       toAddressText.value = "";
     }
     if (exampleQuerySelector.value == "Minecraft NFT") {
       documentNameText.value = 'mynfa';
       queryObjectText.value = '{ "startAt": 1 }';
-      contractIdText.value = '75LFKcpnX6mnz1ToWTnKrtZqTdYWyExUfixPmc4DvR6a';
+      contractIdText.value = '5EksZGAiJ3zA17TgaHev65GtxmvowHaQz8jUTDjV6C47';
       toAddressText.value = "";
     }
     if (exampleQuerySelector.value == "Fun Token") {

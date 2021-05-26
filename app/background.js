@@ -120,7 +120,7 @@ const pResponseProp = "status";
 
 ////////////////////////////////////
 ///// Dapp Signing Simple (Push Notifications)
-const messageContractId = "3coTShwTvmKiySpwmDDzRJ9FGQx4RNLdawLttT9RNxXa"
+const messageContractId = "3oURAJACLdVnxdWzpjHL4m81nYTT81eQoLsiWAhXKmxw"
 var pRequestDocument2 = ["message"];
 const pRequestProp2Header = "header";
 const pRequestProp2Ref = "reference";
@@ -133,7 +133,7 @@ var messageAmountTx = [''];
 var messageAddrTx = [''];
 
 //// DPNS-Contract for docID
-const domainContractID = "36ez8VqoDbR8NkdXwFaf9Tp8ukBdQxN8eYs8JNMnUyKz";
+const domainContractID = "76wgB8KBxLGhtEzn4Hp5zgheyzzpHYvfcWGLs69B2ahq";
 const domainRequestDocument = "domain";
 
 //// Vendor Details
@@ -393,7 +393,10 @@ async function getDefaultUsername() {
   
   var name = "";
   try {
+    console.log("identityId: " + curIdentityId)
+    // console.log(await sdk.platform.names.resolveByRecord('dashUniqueIdentityId', '6KofS1fhpLU7RhekrvemTKRzLG48551xZm3PmSWZrH4o'))
     var doc = await sdk.platform.names.resolveByRecord('dashUniqueIdentityId', curIdentityId);
+    // console.log(doc[0].data.label);
     name = doc[0].data.label;
   } catch (e) {
     console.error('Something went wrong:', e);
@@ -1536,7 +1539,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log("localforage length before reset: " + await localforage.length())
         await localforage.clear();
         console.log("localforage length after reset: " + await localforage.length())
-        
+
         sendResponse({ complete: true });
         disconnect();
         connect();
