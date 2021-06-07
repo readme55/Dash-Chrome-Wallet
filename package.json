@@ -1,6 +1,6 @@
 {
   "name": "Dash-Chrome-Wallet",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "",
   "directories": {
     "test": "test"
@@ -26,6 +26,5 @@
     "gulp": "^4.0.2",
     "minify": "^6.0.1",
     "web-ext": "^5.4.1"
-  },
-  "dependencies": {}
+  }
 }
